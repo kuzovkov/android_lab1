@@ -112,7 +112,7 @@ function load_json($data){
         }
         fclose($f);
     }
-    return implode(SEPARATOR,$result);
+    return $result;
 }
 
 

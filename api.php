@@ -9,8 +9,8 @@ $files = print_r($_FILES, true);
 $log = implode("\n", [$now, 'POST:', $post, 'FILES:', $files]);
 file_put_contents('api.log', $log, FILE_APPEND);
 
-echo ( handler(getReqData()))? 'Command execute success' : 'Fail execute command';
-
+$result = handler(getReqData());
+echo $result;
 
 function getReqData(){
 	$data = array();
@@ -55,7 +55,7 @@ function save($data){
 		fclose($f);
 	}
 	
-	return $result;
+	return $result? 'Command execute success' : 'Fail execute command';
 }
 
 function uploadPhoto($email){
@@ -134,9 +134,8 @@ function delete($data){
 			fwrite($f, trim($row)."\n");
 		}
 		fclose($f);
-		return true;
+		return 'Command execute success';
 	}
-	return false;
 }
 
 

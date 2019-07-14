@@ -96,7 +96,7 @@ function load_json($data){
     if ($f){
         while( $row = fgets($f)){
             if (strlen($row) == 0) continue;
-            $row = explode(';', $row);
+            $row = explode(';', trim($row));
             $data = [
                 'name' => $row[0],
                 'lastName' => $row[1],
@@ -112,7 +112,7 @@ function load_json($data){
         }
         fclose($f);
     }
-    return $result;
+    return json_encode($result);
 }
 
 

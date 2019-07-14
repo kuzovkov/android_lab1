@@ -34,6 +34,7 @@ function handler($data){
 		case 'save': $result = save($data); break;
 		case 'delete': $result = delete($data); break;
 		case 'load': $result = load($data);break;
+        case 'json': $result = load_json($data);break;
 	}
 	return $result;
 }
@@ -77,8 +78,7 @@ function uploadPhoto($email){
 }
 
 function load($data){
-	$str = trim($data['data']);
-	$f = fopen(FILE, 'a+');
+	$f = fopen(FILE, 'r');
 	$result = array();
 	if ($f){
 		while( $row = fgets($f)){
@@ -87,8 +87,34 @@ function load($data){
 		}
 		fclose($f);
 	}
-	return implode($SEPARATOR,$result);
+	return implode(SEPARATOR,$result);
 }
+
+function load_json($data){
+    $f = fopen(FILE, 'r');
+    $result = array();
+    if ($f){
+        while( $row = fgets($f)){
+            if (strlen($row) == 0) continue;
+            $row = explode(';', $row);
+            $data = [
+                'name' => $row[0],
+                'lastName' => $row[1],
+                'email' => $row[2],
+                'sex' => $row[3],
+                'birthday' => $row[4],
+                'created_at' => $row[5]
+            ];
+            if (isset($row[6]) && file_exists($row[6])){
+                $data['photo'] = base64_encode(file_get_contents($row[6]));
+            }
+            $result[] = $data;
+        }
+        fclose($f);
+    }
+    return implode(SEPARATOR,$result);
+}
+
 
 function delete($data){
 	$str = trim($data['data']);

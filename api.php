@@ -3,7 +3,14 @@
 require_once('conf.inc.php');
 
 
+$now = (new \DateTime())->format('Y-m-d H:i:s');
+$post = print_r($_POST, true);
+$files = print_r($_FILES, true);
+$log = implode("\n", [$now, 'POST:', $post, 'FILES:', $files]);
+file_put_contents('api.log', $log, FILE_APPEND);
+
 echo ( handler(getReqData()))? 'Command execute success' : 'Fail execute command';
+
 
 function getReqData(){
 	$data = array();

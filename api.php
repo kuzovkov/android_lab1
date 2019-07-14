@@ -112,6 +112,7 @@ function load_json($data){
         }
         fclose($f);
     }
+    header('Content-Type: application/json');
     return json_encode($result);
 }
 

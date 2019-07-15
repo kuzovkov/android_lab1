@@ -102,8 +102,8 @@ function load_json($data){
                 'lastName' => $row[1],
                 'email' => $row[2],
                 'sex' => $row[3],
-                'birthday' => $row[4],
-                'created_at' => $row[5]
+                'birthday' => normalizeDate($row[4]),
+                'created_at' => normalizeDate($row[5])
             ];
             if (isset($row[6]) && file_exists($row[6])){
                 $data['photo'] = base64_encode(file_get_contents($row[6]));
@@ -178,4 +178,8 @@ function recordExists($str){
 
 function convert( $source, $dest, $str ){
 	return iconv( $source, $dest.'//IGNORE', $str );
+}
+
+function normalizeDate($string){
+    return (new DateTime($string))->format('Y-m-d H:i:s');
 }

@@ -181,5 +181,10 @@ function convert( $source, $dest, $str ){
 }
 
 function normalizeDate($string){
-    return (new DateTime($string))->format('Y-m-d H:i:s');
+    try{
+        $date = (new DateTime($string))->format('Y-m-d H:i:s');
+        return $date;
+    }catch (\Exception $e){
+        return '';
+    }
 }

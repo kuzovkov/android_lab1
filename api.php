@@ -182,6 +182,7 @@ function convert( $source, $dest, $str ){
 
 function normalizeDate($string){
     try{
+        $string = str_replace('Birthday:', '', trim($string));
         $date = (new DateTime($string))->format('Y-m-d H:i:s');
         return $date;
     }catch (\Exception $e){
